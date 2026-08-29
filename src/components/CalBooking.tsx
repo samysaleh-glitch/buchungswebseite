@@ -3,8 +3,8 @@
 import Cal, { getCalApi } from "@calcom/embed-react";
 import { useEffect } from "react";
 
-const CAL_LINK = "samy/strategie-call";
-const CAL_NAMESPACE = "strategie-call";
+const CAL_LINK = "samy-nowak/30min";
+const CAL_NAMESPACE = "30min";
 
 export default function CalBooking() {
   useEffect(() => {
