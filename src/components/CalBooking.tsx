@@ -4,28 +4,25 @@ import Cal, { getCalApi } from "@calcom/embed-react";
 import { useEffect } from "react";
 
 const CAL_LINK = "samy-nowak/30min";
-const CAL_NAMESPACE = "30min";
 
 export default function CalBooking() {
   useEffect(() => {
     (async function () {
-      const cal = await getCalApi({ namespace: CAL_NAMESPACE });
+      const cal = await getCalApi();
       cal("ui", {
         theme: "dark",
+        layout: "month_view",
         styles: {
           branding: { brandColor: "#6366f1" },
         },
-        hideEventTypeDetails: false,
-        layout: "month_view",
       });
     })();
   }, []);
 
   return (
     <Cal
-      namespace={CAL_NAMESPACE}
       calLink={CAL_LINK}
-      style={{ width: "100%", height: "100%", overflow: "scroll" }}
+      style={{ width: "100%", height: "100%", minHeight: "650px" }}
       config={{ layout: "month_view", theme: "dark" }}
     />
   );
