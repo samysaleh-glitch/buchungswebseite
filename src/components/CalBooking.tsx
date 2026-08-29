@@ -1,16 +1,11 @@
+"use client";
+
 export default function CalBooking() {
   return (
     <iframe
-      src="https://cal.com/samy-nowak?theme=dark"
+      src="https://cal.com/samy-nowak"
       title="Cal.com Terminbuchung"
-      style={{
-        width: "100%",
-        height: "100%",
-        minHeight: "700px",
-        border: "none",
-        borderRadius: "1.35rem",
-        backgroundColor: "transparent",
-      }}
+      className="h-full min-h-[700px] w-full rounded-[1.35rem] border-0 bg-transparent"
     />
   );
 }
