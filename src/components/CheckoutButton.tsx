@@ -8,6 +8,16 @@ import type { PackageId } from "@/lib/stripe/packages";
 
 let stripePromise: Promise<Stripe | null> | null = null;
 
+/**
+ * Echte Stripe Publishable Keys bestehen nach dem Präfix ausschließlich aus
+ * alphanumerischen Zeichen. Platzhalter wie "pk_test_...dein_key_hier"
+ * enthalten Unterstriche und fallen damit sauber durch dieses Muster.
+ */
+function hasLiveStripeKey(): boolean {
+  const key = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+  return !!key && /^pk_(test|live)_[A-Za-z0-9]{20,}$/.test(key);
+}
+
 function getStripe(): Promise<Stripe | null> {
   if (!stripePromise) {
     const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
@@ -17,6 +27,10 @@ function getStripe(): Promise<Stripe | null> {
     stripePromise = loadStripe(publishableKey);
   }
   return stripePromise;
+}
+
+function scrollToBooking() {
+  document.getElementById("buchung")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 interface CheckoutButtonProps {
@@ -30,6 +44,12 @@ export default function CheckoutButton({ packageId, featured }: CheckoutButtonPr
 
   async function handleClick() {
     setError(null);
+
+    if (!hasLiveStripeKey()) {
+      scrollToBooking();
+      return;
+    }
+
     setLoading(true);
 
     try {
